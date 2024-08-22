@@ -1,0 +1,6 @@
+body {
+    background-color: #d2bae4; /* Light grey background color */
+  }
+  .tintedImage{
+    filter: sepia(0) hue-rotate(27deg) saturate(10);
+  }
