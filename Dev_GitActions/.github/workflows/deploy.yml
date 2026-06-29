@@ -22,7 +22,7 @@ jobs:
 
       - name: Authenticate to Salesforce # step name
         echo "${{ secrets.SFDX_AUTH_URL }}" > ./sfdx-auth-url.txt # write the sfdx auth URL to a file
-        run: sfdx auth:sfdxurl:store -f ./sfdx-auth-url.txt # authenticate to Salesforce using the sfdx auth URL
+        run: sfdx auth:sfdxurl:store -f sfdx-auth-url.txt -a fillics # authenticate to Salesforce using the sfdx auth URL
         
       - name: Deploy to Salesforce # step name
-        run: sfdx force:source:deploy -p force-app/main/default -u MyOrgAlias --wait 10 --testlevel RunLocalTests # deploy the source code to Salesforce
+        run: sfdx force:source:deploy -p force-app -u fillics # deploy the source code to Salesforce
