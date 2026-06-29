@@ -1,7 +1,6 @@
-name: Deploy to NewSFDC #name of the workflow
+name: Deploy to NewSFDC # name of the workflow
 
-#event -> on push to preprod branch, trigger the workflow
-
+# event -> on push to preprod branch, trigger the workflow
 on: 
   push:
     branches: # what branch to trigger the workflow
@@ -15,15 +14,15 @@ jobs:
       - name: Checkout code # step name
         uses: actions/checkout@v3 # checkout the code from the repository
 
-      - name: Set up Salesforce CLI # step name
-        uses: amtrack/sfdx-action@v1.0.0 # use the Salesforce CLI action
-        with:
-          version: latest # use the latest version of Salesforce CLI
+      - name: Install Salesforce CLI
+        run: |
+          npm install -g @salesforce/cli
+          sf --version # Verifies the installation successfully completed
 
-      - name : Authenticate to Salesforce # step name
-        run : |
+      - name: Authenticate to Salesforce # step name
+        run: |
           echo "${{ secrets.SFDX_AUTH_URL }}" > ./sfdx-auth-url.txt
-          sfdx auth:sfdxurl:store -f sfdx-auth-url.txt -a fillics
-        
+          sf org login sfdx-url -d -f ./sfdx-auth-url.txt -a fillics
+
       - name: Deploy to Salesforce # step name
-        run: sfdx force:source:deploy -p force-app -u fillics # deploy the source code to Salesforce
+        run: sf project deploy start -p force-app -o fillics # deploy the source code to Salesforce
