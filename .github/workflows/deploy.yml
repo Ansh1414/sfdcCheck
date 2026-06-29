@@ -20,9 +20,10 @@ jobs:
         with:
           version: latest # use the latest version of Salesforce CLI
 
-      - name: Authenticate to Salesforce # step name
-        echo "${{ secrets.SFDX_AUTH_URL }}" > ./sfdx-auth-url.txt # write the sfdx auth URL to a file
-        run: sfdx auth:sfdxurl:store -f sfdx-auth-url.txt -a fillics # authenticate to Salesforce using the sfdx auth URL
+      - name : Authenticate to Salesforce # step name
+        run : |
+          echo "${{ secrets.SFDX_AUTH_URL }}" > ./sfdx-auth-url.txt
+          sfdx auth:sfdxurl:store -f sfdx-auth-url.txt -a fillics
         
       - name: Deploy to Salesforce # step name
         run: sfdx force:source:deploy -p force-app -u fillics # deploy the source code to Salesforce
